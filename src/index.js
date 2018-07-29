@@ -87,9 +87,9 @@ export default class Lottie extends React.Component {
       const targetProperties = Object.keys(animationControl);
 
       targetProperties.forEach((property) => {
-        const propertyPath = this.animationAPI.getKeyPath(property);
+        const propertyPath = this.animApi.getKeyPath(property);
         const value = animationControl[property];
-        this.animationAPI.addValueCallback(propertyPath, () => value);
+        this.animApi.addValueCallback(propertyPath, () => value);
       });
     }
   }
