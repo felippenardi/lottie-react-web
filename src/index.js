@@ -48,7 +48,8 @@ export default class Lottie extends React.Component {
     if (this.props.isStopped) {
       this.stop();
     } else if (this.props.segments) {
-      this.playSegments();
+      const shouldForce = !!this.props.forceSegments;
+      this.playSegments(shouldForce);
     } else {
       this.play();
     }
@@ -77,8 +78,8 @@ export default class Lottie extends React.Component {
     this.anim.play();
   }
 
-  playSegments() {
-    this.anim.playSegments(this.props.segments);
+  playSegments(shouldForce) {
+    this.anim.playSegments(this.props.segments, shouldForce);
   }
 
   stop() {
@@ -165,6 +166,7 @@ Lottie.propTypes = {
   isPaused: PropTypes.bool,
   speed: PropTypes.number,
   segments: PropTypes.arrayOf(PropTypes.number),
+  forceSegments: PropTypes.bool,
   direction: PropTypes.number,
   ariaRole: PropTypes.string,
   ariaLabel: PropTypes.string,
