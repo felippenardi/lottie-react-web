@@ -1,9 +1,6 @@
 # Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie), [Vue](https://github.com/chenqingspring/vue-lottie))
 
-[![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
-
-## Demo
-https://chenqingspring.github.io/react-lottie
+[![npm version](https://badge.fury.io/js/lottie-react-web.svg)](http://badge.fury.io/js/lottie-react-web)
 
 ## Wapper of bodymovin.js
 
@@ -28,7 +25,7 @@ Looking for lottie files › https://www.lottiefiles.com/
 
 Install through npm:
 ```
-npm install --save react-lottie
+npm install --save lottie-react-web
 ```
 
 ## Usage
@@ -37,7 +34,7 @@ Import pinjump.json.json as animation data
 
 ```jsx
 import React from 'react'
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react-web';
 import * as animationData from './pinjump.json'
 
 export default class LottieControl extends React.Component {
@@ -55,7 +52,7 @@ export default class LottieControl extends React.Component {
 
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
+      autoplay: true,
       animationData: animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
@@ -90,7 +87,7 @@ the object representing the animation settings that will be instantiated by body
 >
 >**animationData** *required*
 >
->**rendererSettings** *required* 
+>**rendererSettings** *required*
 
 **width** *optional* [default: `100%`]
 
@@ -117,8 +114,6 @@ eventListeners=[
 ## Related Projects
 
 * [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
-* [Angular Lottie](https://github.com/chenqingspring/ng-lottie) angular implementation
-* [Vue Lottie](https://github.com/chenqingspring/vue-lottie) vue implementation
 * [React Native Lottie](https://github.com/airbnb/lottie-react-native) react native implementation by airbnb
 * [IOS Lottie](https://github.com/airbnb/lottie-ios) ios implementation by airbnb
 * [Android Lottie](https://github.com/airbnb/lottie-android) android implementation by airbnb
@@ -128,4 +123,3 @@ Your contributions and suggestions are heartily welcome.
 
 ## License
 MIT
-
