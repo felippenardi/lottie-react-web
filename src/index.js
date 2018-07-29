@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import lottie from 'lottie-web';
+import lottieApi from 'lottie-api/dist/lottie_api';
 
 export default class Lottie extends React.Component {
   componentDidMount() {
@@ -10,26 +11,29 @@ export default class Lottie extends React.Component {
     } = this.props;
 
     const {
-      loop,
-      autoplay,
+      loop = false,
+      autoplay = false,
       animationData,
       rendererSettings,
-      segments,
+      animationControl = false,
+      segments = false,
     } = options;
 
     this.options = {
       container: this.el,
       renderer: 'svg',
-      loop: loop !== false,
-      autoplay: autoplay !== false,
-      segments: segments !== false,
+      loop,
+      autoplay,
+      segments,
       animationData,
       rendererSettings,
+      animationControl,
     };
 
     this.options = { ...this.options, ...options };
 
     this.anim = lottie.loadAnimation(this.options);
+    this.animApi = lottieApi.createAnimationApi(this.anim);
     this.registerEvents(eventListeners);
   }
 
@@ -40,6 +44,7 @@ export default class Lottie extends React.Component {
       this.destroy();
       this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
+      this.animApi = lottieApi.createAnimationApi(this.anim);
       this.registerEvents(nextProps.eventListeners);
     }
   }
@@ -56,6 +61,7 @@ export default class Lottie extends React.Component {
 
     this.pause();
     this.setSpeed();
+    this.setAnimationControl();
     this.setDirection();
   }
 
@@ -64,6 +70,7 @@ export default class Lottie extends React.Component {
     this.destroy();
     this.options.animationData = null;
     this.anim = null;
+    this.animApi = null;
   }
 
   setSpeed() {
@@ -72,6 +79,19 @@ export default class Lottie extends React.Component {
 
   setDirection() {
     this.anim.setDirection(this.props.direction);
+  }
+
+  setAnimationControl() {
+    const { animationControl } = this.options;
+    if (animationControl) {
+      const targetProperties = Object.keys(animationControl);
+
+      targetProperties.forEach((property) => {
+        const propertyPath = this.animationAPI.getKeyPath(property);
+        const value = animationControl[property];
+        this.animationAPI.addValueCallback(propertyPath, () => value);
+      });
+    }
   }
 
   play() {
