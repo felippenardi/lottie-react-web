@@ -18,25 +18,6 @@ const defaultOptions = {
 
 describe('react-lottie', () => {
   describe('props', () => {
-    describe('isClickToPauseDisabled', () => {
-      it('should prevent handleClickToPause from being called when true', () => {
-        const component = mount(<ReactLottie options={defaultOptions} />);
-        const spy = sinon.stub();
-
-        component.instance().handleClickToPause = spy;
-        component.instance().forceUpdate();
-        component.find('div').at(0).simulate('click');
-
-        expect(spy.callCount).to.equal(1);
-
-        spy.reset();
-        component.setProps({ isClickToPauseDisabled: true });
-        component.find('div').at(0).simulate('click');
-
-        expect(spy.callCount).to.equal(0);
-      });
-    });
-
     describe('ariaRole, ariaLabel, and title', () => {
       it('should set the aria role correctly', () => {
         const component = shallow(

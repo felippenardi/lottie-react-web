@@ -109,23 +109,12 @@ export default class Lottie extends React.Component {
     });
   }
 
-  handleClickToPause = () => {
-    // The pause() method is for handling pausing by passing a prop isPaused
-    // This method is for handling the ability to pause by clicking on the animation
-    if (this.anim.isPaused) {
-      this.anim.play();
-    } else {
-      this.anim.pause();
-    }
-  }
-
   render() {
     const {
       width,
       height,
       ariaRole,
       ariaLabel,
-      isClickToPauseDisabled,
       title,
     } = this.props;
 
@@ -150,8 +139,6 @@ export default class Lottie extends React.Component {
       ...this.props.style,
     };
 
-    const onClickHandler = isClickToPauseDisabled ? () => null : this.handleClickToPause;
-
     return (
       // Bug with eslint rules https://github.com/airbnb/javascript/issues/1374
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -160,7 +147,6 @@ export default class Lottie extends React.Component {
           this.el = c;
         }}
         style={lottieStyles}
-        onClick={onClickHandler}
         title={title}
         role={ariaRole}
         aria-label={ariaLabel}
@@ -182,7 +168,6 @@ Lottie.propTypes = {
   direction: PropTypes.number,
   ariaRole: PropTypes.string,
   ariaLabel: PropTypes.string,
-  isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
   style: PropTypes.string,
 };
@@ -194,6 +179,5 @@ Lottie.defaultProps = {
   speed: 1,
   ariaRole: 'button',
   ariaLabel: 'animation',
-  isClickToPauseDisabled: false,
   title: '',
 };
