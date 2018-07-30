@@ -11,23 +11,21 @@ export default class Lottie extends React.Component {
     } = this.props;
 
     const {
-      loop = false,
-      autoplay = false,
+      loop,
+      autoplay,
       animationData,
       rendererSettings,
-      animationControl = false,
-      segments = false,
+      segments,
     } = options;
 
     this.options = {
       container: this.el,
       renderer: 'svg',
-      loop,
-      autoplay,
-      segments,
+      loop: loop !== false,
+      autoplay: autoplay !== false,
+      segments: segments !== false,
       animationData,
       rendererSettings,
-      animationControl,
     };
 
     this.options = { ...this.options, ...options };
@@ -59,9 +57,9 @@ export default class Lottie extends React.Component {
       this.play();
     }
 
+    this.setAnimationControl();
     this.pause();
     this.setSpeed();
-    this.setAnimationControl();
     this.setDirection();
   }
 
@@ -82,13 +80,13 @@ export default class Lottie extends React.Component {
   }
 
   setAnimationControl() {
-    const { animationControl } = this.options;
+    const { animationControl } = this.props.options;
     if (animationControl) {
-      const targetProperties = Object.keys(animationControl);
+      const properties = Object.keys(this.props.options.animationControl);
 
-      targetProperties.forEach((property) => {
+      properties.forEach((property) => {
         const propertyPath = this.animApi.getKeyPath(property);
-        const value = animationControl[property];
+        const value = this.props.options.animationControl[property];
         this.animApi.addValueCallback(propertyPath, () => value);
       });
     }
