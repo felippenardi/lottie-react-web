@@ -16,7 +16,7 @@ export default class Lottie extends React.Component {
       animationData,
       rendererSettings,
       segments,
-      animationControl,
+      animationControl = false,
     } = options;
 
     this.options = {
@@ -25,7 +25,7 @@ export default class Lottie extends React.Component {
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
-      animationControl: animationControl !== false,
+      animationControl,
       animationData,
       rendererSettings,
     };
@@ -35,6 +35,7 @@ export default class Lottie extends React.Component {
     this.anim = lottie.loadAnimation(this.options);
     this.animApi = lottieApi.createAnimationApi(this.anim);
     this.registerEvents(eventListeners);
+    this.setAnimationControl();
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
