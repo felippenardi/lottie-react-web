@@ -33,6 +33,7 @@ export default class Lottie extends React.Component {
     this.options = { ...this.options, ...options };
 
     this.anim = lottie.loadAnimation(this.options);
+    this.setDirection();
     this.animApi = lottieApi.createAnimationApi(this.anim);
     this.registerEvents(eventListeners);
     this.setAnimationControl();
