@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/felippenardi/lottie-react-web/compare/v2.0.0...v2.0.1) (2018-08-04)
+
+
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/felippenardi/lottie-react-web/compare/v2.0.0-1...v2.0.0) (2018-07-30)
+
+
+
+<a name="2.0.0-1"></a>
+# [2.0.0-1](https://github.com/felippenardi/lottie-react-web/compare/v2.0.0-0...v2.0.0-1) (2018-07-29)
+
+
+
+<a name="2.0.0-0"></a>
+# [2.0.0-0](https://github.com/felippenardi/lottie-react-web/compare/v1.2.3...v2.0.0-0) (2018-07-29)
+
+
+* Feature/remove click to pause (#2) ([ec550bf](https://github.com/felippenardi/lottie-react-web/commit/ec550bf)), closes [#2](https://github.com/felippenardi/lottie-react-web/issues/2)
+
+
+### Features
+
+* Allow customizing animation at runtime ([6113db4](https://github.com/felippenardi/lottie-react-web/commit/6113db4))
+* Allow setting 'force segments' flag ([0338b8b](https://github.com/felippenardi/lottie-react-web/commit/0338b8b))
+
+
+### BREAKING CHANGES
+
+* Remove Click To Pause feature
+
+The animation control should not be responsibility of the player
+
+* chore: bump version number
+
+* chore(release): 1.3.4
+
+
+
 <a name="1.3.4"></a>
 ## [1.3.4](https://github.com/felippenardi/lottie-react-web/compare/v1.2.3...v1.3.4) (2018-07-29)
 
