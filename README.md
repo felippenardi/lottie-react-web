@@ -1,125 +1,116 @@
-# Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie), [Vue](https://github.com/chenqingspring/vue-lottie))
+Lottie for React, [React Native](https://github.com/react-community/lottie-react-native), [iOS](https://github.com/airbnb/lottie-ios), and [Android](https://github.com/airbnb/lottie-android)
+===
 
-[![npm version](https://badge.fury.io/js/lottie-react-web.svg)](http://badge.fury.io/js/lottie-react-web)
+[![npm Version](https://img.shields.io/npm/v/lottie-react-web.svg)](https://www.npmjs.com/package/lottie-react-web) [![License](https://img.shields.io/npm/l/lottie-react-web.svg)](https://www.npmjs.com/package/lottie-react-native)
 
-## Wapper of bodymovin.js
+**Lottie component for React** with runtime animation control.
 
-[bodymovin](https://github.com/bodymovin/bodymovin) is [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) plugin for exporting animations as JSON, also it provide bodymovin.js for render them as svg/canvas/html.
+Lottie is a library for the Web, Android and iOS that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as JSON with [bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on each platform!
 
-## Why Lottie?
+For the first time, designers can create **and ship** beautiful animations without an engineer painstakingly recreating it by hand.
 
-#### Flexible After Effects features
-We currently support solids, shape layers, masks, alpha mattes, trim paths, and dash patterns. And we’ll be adding new features on a regular basis.
+*This library is a [react-lottie](https://github.com/chenqingspring/react-lottie) fork that adds the capability for **runtime animation control** and fixes lots of bugs.*
 
-#### Manipulate your animation any way you like
-You can go forward, backward, and most importantly you can program your animation to respond to any interaction.
+# Getting Started
 
-#### Small file sizes
-Bundle vector animations within your app without having to worry about multiple dimensions or large file sizes. Alternatively, you can decouple animation files from your app’s code entirely by loading them from a JSON API.
+Get started with Lottie by installing the node module with yarn or npm:
 
-[Learn more](http://airbnb.design/introducing-lottie/) › http://airbnb.design/lottie/
-
-Looking for lottie files › https://www.lottiefiles.com/
-
-## Installation
-
-Install through npm:
 ```
-npm install --save lottie-react-web
+yarn add lottie-react-web
+```
+or
+```
+npm i --save lottie-react-web
 ```
 
-## Usage
+# Usage
 
-Import pinjump.json.json as animation data
+`<Lottie>` component can be used in a declarative way:
 
 ```jsx
-import React from 'react'
-import Lottie from 'lottie-react-web';
-import * as animationData from './pinjump.json'
+import React from 'react';
+import Lottie from 'lottie-react-web'
+import animation from './animation.json'
 
-export default class LottieControl extends React.Component {
+const App = () => (
+  <Lottie
+    options={{
+      animationData: animation
+    }}
+  />
+)
 
-  constructor(props) {
-    super(props);
-    this.state = {isStopped: false, isPaused: false};
-  }
+export default App
+```
 
-  render() {
-    const buttonStyle = {
-      display: 'block',
-      margin: '10px auto'
-    };
+By default it will automatically play the animation in loop.
 
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
+Lottie's animation control can be set via props. Here is an example of a toggle animation that reacts on click:
 
-    return <div>
-      <Lottie options={defaultOptions}
-              height={400}
-              width={400}
-              isStopped={this.state.isStopped}
-              isPaused={this.state.isPaused}/>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-      <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+```jsx
+import React, { Component } from 'react';
+import Lottie from 'lottie-react-web'
+import toggleAnimation from './toggleAnimation.json'
+
+export default class App extends Component {
+  this.state = { isToggled: false }
+
+  render() (
+    <div
+      onClick={() => {
+        this.setState(state => { isToggled: !state.isToggled})
+      }}
+    >
+      <Lottie
+        direction={this.state.isToggled ? 1 : -1}
+        options={{
+          animationData: toggleAnimation,
+          loop: false,
+        }}
+      />
     </div>
-  }
-}
+  )
+)
 
+export default App
 ```
 
-### props
-The `<Lottie />` Component supports the following components:
+You can also change animation at runtime. Let's say you want to change the position of an element with layer name "Square" in After Effects:
 
-**options** *required*
 
-the object representing the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported:
-
->**loop** *options* [default: `false`]
->
->**autoplay** *options* [default: `false`]
->
->**animationData** *required*
->
->**rendererSettings** *required*
-
-**width** *optional* [default: `100%`]
-
-pixel value for containers width.
-
-**height** *optional* [default: `100%`]
-
-pixel value for containers height.
-
-**eventListeners** *optional* [default: `[]`]
-
-This is an array of objects containing a `eventName` and `callback` function that will be registered as  eventlisteners on the animation object. refer to [bodymovin#events](https://github.com/bodymovin/bodymovin#events) where the mention using addEventListener, for a list of available custom events.
-
-example:
 ```jsx
-eventListeners=[
-  {
-    eventName: 'complete',
-    callback: () => console.log('the animation completed:'),
-  },
-]
+import React from 'react';
+import Lottie from 'lottie-react-web'
+import animation from './animation.json'
+
+const Animation = ({ x, y }) => (
+  <Lottie
+    options={{
+      animationData: animation,
+      animationControl: {
+        'Square,Transform,Position': [x, y],
+      }
+    }}
+  />
+)
+
+export default Animation
 ```
 
-## Related Projects
+## API
+These are all props available:
 
-* [Bodymovin](https://github.com/bodymovin/bodymovin) react-lottie is a wrapper of bodymovin
-* [React Native Lottie](https://github.com/airbnb/lottie-react-native) react native implementation by airbnb
-* [IOS Lottie](https://github.com/airbnb/lottie-ios) ios implementation by airbnb
-* [Android Lottie](https://github.com/airbnb/lottie-android) android implementation by airbnb
-
-## Contribution
-Your contributions and suggestions are heartily welcome.
-
-## License
-MIT
+| Prop | Description | Default |
+|---|---|---|
+|**`options`**| **Mandatory** - The object representing the animation settings that will be instantiated by bodymovin. Defines the source of animation (`animationData`), loop, autoplay, a few others. See details in the section below. | `{ autoplay: true, loop: true } ` |
+|**`width`**| Sets the width of the animation container. | `100%` |
+|**`height`**| Sets the heigth of the animation container. | `100%` |
+|**`isStopped`**| A boolean flag indicating whether or not the animation is stopped. | `false` |
+|**`isPaused`**| A boolean flag indicating whether or not the animation is paused. | `false` |
+|**`speed`**| An integer indicating the speed of the animation ( `1` is `100%`.) | `1` |
+|**`segments`**| An array of two integers indicating the beginning and ending frame of the animation | Defaults to play entire animation |
+|**`forceSegment`**| A boolean indicating wether the segments should play immediately or sequentially | `false` |
+|**`direction`**| An integer indicating wether the animation progresses in the usual (`1`) or reverse (`-1`) direction | `1` |
+|**`ariaRole`**| A string indicating the animation container `ariaRole` property | `"button"` |
+|**`ariaLabel`**| A string indicating the animation container `ariaLabel` property | `"animation"` |
+|**`title`**| A string indicating the animation container `title` property | `""` |
