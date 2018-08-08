@@ -3,7 +3,12 @@ Lottie for React, [React Native](https://github.com/react-community/lottie-react
 
 [![npm Version](https://img.shields.io/npm/v/lottie-react-web.svg)](https://www.npmjs.com/package/lottie-react-web) [![License](https://img.shields.io/npm/l/lottie-react-web.svg)](https://www.npmjs.com/package/lottie-react-native)
 
+<img width="500" src="images/lottie.png">
+<br/><br/>
+
 **Lottie component for React** with runtime animation control.
+
+# Introduction
 
 Lottie is a library for the Web, Android and iOS that parses [Adobe After Effects](http://www.adobe.com/products/aftereffects.html) animations exported as JSON with [bodymovin](https://github.com/bodymovin/bodymovin) and renders them natively on each platform!
 
@@ -100,6 +105,9 @@ export default Animation
 ## API
 These are all props available:
 
+
+### Props
+
 | Prop | Description | Default |
 |---|---|---|
 |**`options`**| **Mandatory** - The object representing the animation settings that will be instantiated by bodymovin. Defines the source of animation (`animationData`), loop, autoplay, a few others. See details in the section below. | `{ autoplay: true, loop: true } ` |
@@ -114,3 +122,28 @@ These are all props available:
 |**`ariaRole`**| A string indicating the animation container `ariaRole` property | `"button"` |
 |**`ariaLabel`**| A string indicating the animation container `ariaLabel` property | `"animation"` |
 |**`title`**| A string indicating the animation container `title` property | `""` |
+
+### Options object
+Defines the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported.
+
+| Prop | Description | Default |
+|---|---|---|
+|**`animationData`**| **Mandatory** - The source of the animation. | — |
+|**`loop`**| Play animation non-stop in a loop. | `true` |
+|**`autoplay`**| Automatically play animation when it is instantiated. | `true` |
+|**`animationControl`**| This is where you can change the animation at runtime. A key value pair of a After Effects property path and the a custom value to apply to it. See details below.  | — |
+|**`rendererSettings`**| Customize bodymovin aspect ratio configurations. | — |
+
+## Changing animation at runtime
+You can target an specific After Effects layer property and change it at
+runtime by passing a `animationControl` object on the `options` prop. Example:
+
+```
+animationControl: {
+  'JoyStkCtrl01,Transform,Position': [-200,300]
+}
+```
+
+This will override the `Position` value of the layer `JoyStkCtrl01` at runtime.
+
+<img width="500" src="images/ae_layer.png">
