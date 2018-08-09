@@ -80,28 +80,6 @@ export default class App extends Component {
 export default App
 ```
 
-You can also change animation at runtime. Let's say you want to change the position of an element with layer name "Square" in After Effects:
-
-
-```jsx
-import React from 'react';
-import Lottie from 'lottie-react-web'
-import animation from './animation.json'
-
-const Animation = ({ x, y }) => (
-  <Lottie
-    options={{
-      animationData: animation,
-      animationControl: {
-        'Square,Transform,Position': [x, y],
-      }
-    }}
-  />
-)
-
-export default Animation
-```
-
 ## API
 These are all props available:
 
@@ -111,6 +89,7 @@ These are all props available:
 | Prop | Description | Default |
 |---|---|---|
 |**`options`**| **Mandatory** - The object representing the animation settings that will be instantiated by bodymovin. Defines the source of animation (`animationData`), loop, autoplay, a few others. See details in the section below. | `{ autoplay: true, loop: true } ` |
+|**`animationControl`**| This is where you can change the animation at runtime. A key value pair of a After Effects property path and the a custom value to apply to it. See details below.  | — |
 |**`width`**| Sets the width of the animation container. | `100%` |
 |**`height`**| Sets the heigth of the animation container. | `100%` |
 |**`isStopped`**| A boolean flag indicating whether or not the animation is stopped. | `false` |
@@ -131,19 +110,33 @@ Defines the animation settings that will be instantiated by bodymovin. Currently
 |**`animationData`**| **Mandatory** - The source of the animation. | — |
 |**`loop`**| Play animation non-stop in a loop. | `true` |
 |**`autoplay`**| Automatically play animation when it is instantiated. | `true` |
-|**`animationControl`**| This is where you can change the animation at runtime. A key value pair of a After Effects property path and the a custom value to apply to it. See details below.  | — |
 |**`rendererSettings`**| Customize bodymovin aspect ratio configurations. | — |
 
 ## Changing animation at runtime
 You can target an specific After Effects layer property and change it at
-runtime by passing a `animationControl` object on the `options` prop. Example:
+runtime by passing setting a `property` object on the `<Lottie>` prop. Example:
 
-```
-animationControl: {
-  'JoyStkCtrl01,Transform,Position': [-200,300]
-}
+```jsx
+import React from 'react';
+import Lottie from 'lottie-react-web'
+import animation from './animation.json'
+
+const Animation = ({ x, y }) => (
+  <Lottie
+    options={{
+      animationData: animation,
+    }}
+    animationControl={{
+      'Square,Transform,Position': [x, y],
+    }}
+  />
+)
+
+export default Animation
 ```
 
 This will override the `Position` value of the layer `JoyStkCtrl01` at runtime.
+
+Lottie is compatible with [Joystick 'n Sliders](https://aescripts.com/joysticks-n-sliders/) After Effects plugin, so you can create amazing animations easily.
 
 <img width="500" src="images/ae_layer.png">
