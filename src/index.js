@@ -16,7 +16,6 @@ export default class Lottie extends React.Component {
       animationData,
       rendererSettings,
       segments,
-      animationControl = false,
     } = options;
 
     this.options = {
@@ -25,7 +24,6 @@ export default class Lottie extends React.Component {
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
-      animationControl,
       animationData,
       rendererSettings,
     };
@@ -84,13 +82,13 @@ export default class Lottie extends React.Component {
   }
 
   setAnimationControl() {
-    const { animationControl } = this.options;
+    const { animationControl } = this.props;
     if (animationControl) {
-      const properties = Object.keys(this.props.options.animationControl);
+      const properties = Object.keys(animationControl);
 
       properties.forEach((property) => {
         const propertyPath = this.animApi.getKeyPath(property);
-        const value = this.props.options.animationControl[property];
+        const value = animationControl[property];
         this.animApi.addValueCallback(propertyPath, () => value);
       });
     }
