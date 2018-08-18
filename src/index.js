@@ -14,18 +14,23 @@ export default class Lottie extends React.Component {
       loop,
       autoplay,
       animationData,
+      path,
+      renderer = 'svg',
       rendererSettings,
+      assetsPath,
       segments,
     } = options;
 
     this.options = {
       container: this.el,
-      renderer: 'svg',
+      path,
+      renderer,
       loop: loop !== false,
       autoplay: autoplay !== false,
       segments: segments !== false,
       animationData,
       rendererSettings,
+      assetsPath
     };
 
     this.options = { ...this.options, ...options };
