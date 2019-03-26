@@ -11,6 +11,7 @@ export default forwardRef(function Lottie(props, ref) {
   const [anim, setAnim] = useState(null);
   // const [animData, setAnimData] = useState(null);
   const [animApi, setAnimApi] = useState(null);
+  const [state, setState] = useState({play: true, speed: props.speed || 1})
   // const [animationDataOld, setAnimationData] = useState(null);
   
 
@@ -35,16 +36,19 @@ export default forwardRef(function Lottie(props, ref) {
     rendererSettings,
   };
 
-  const setSpeed = (_anim) => {
-    _anim = _anim || anim;
-    if(!_anim) return;
-    _anim.setSpeed(props.speed);
+  const setSpeed = (speed = null) => {
+    // _anim = _anim || anim;
+    // if(!_anim) return;
+    // _anim.setSpeed(speed || props.speed);
+    const s = speed || props.speed;
+    setState(p=>({...p, speed: s}));
   };
 
-  const setDirection = (_anim) => {
-    _anim = _anim || anim;
-    if(!_anim) return;
-    _anim.setDirection(props.direction);
+  const setDirection = (direction = null) => {
+    // _anim = _anim || anim;
+    // if(!_anim) return;
+    // _anim.setDirection(props.direction);
+    setState(p=>({...p, direction: direction || props.direction}));
   };
 
   const setAnimationControl = (_animApi) => {
@@ -62,29 +66,36 @@ export default forwardRef(function Lottie(props, ref) {
     }
   };
 
-  const play = (_anim) => {
-    _anim = _anim || anim;
-    if(!_anim) return;
-    _anim.play();
+  const play = () => {
+    // _anim = _anim || anim;
+    // if(!_anim) return;
+    // _anim.play();
+    setState(p=>({...p, play: true, pause: false}));
   };
 
   const playSegments = (shouldForce) => {
     if(!anim) return;
     anim.playSegments(props.segments, shouldForce);
+    // setState(p=>({...p, segments: props.segments, shouldForce: shouldForce}))
   };
 
   const stop = () => {
-    if(!anim) return;
-    anim.stop();
+    // if(!anim) return;
+    // anim.stop();
+    setState(p=>({...p, play: false, pause: false}));
   };
 
   const pause = () => {
-    if(!anim) return;
+    // if(!anim) return;
+    // if(state.pause != props.isPaused) 
+    setState(p=>({...p, pause: true}));
+    /*
     if (props.isPaused && !anim.isPaused) {
-      anim.pause();
+      // anim.pause();
+      setState(p=>({...p, pause: true}));
     } else if (!props.isPaused && anim.isPaused) {
       anim.pause();
-    }
+    }*/
   };
 
   const destroy = () => {
@@ -107,18 +118,15 @@ export default forwardRef(function Lottie(props, ref) {
   };
 
   useEffect(() => {
-    // options = { ...optionsIn, ...options  };
-   // if(!el.current) return;
-
     options.container = el.current;
-    console.log('options', options);
+
     const _anim = lottie.loadAnimation(options);
     const _animApi = lottieApi.createAnimationApi(_anim);
     setAnim(_anim);
     setAnimApi(_animApi);
 
-    setSpeed(_anim);
-    setDirection(_anim);
+    setSpeed(props.speed);
+    // setDirection();
     registerEvents(eventListeners, _anim);
     setAnimationControl(_animApi);
 
@@ -141,12 +149,13 @@ export default forwardRef(function Lottie(props, ref) {
     animApi: animApi,
     playSegments: playSegments,
     pause: pause,
-    destroy: destroy
+    destroy: destroy,
+    stop: stop
   }));
 
   // componentDidUpdate
   useEffect( () => {
-    if(!el.current) return;
+    if(!el.current || !anim) return;
 
     if (props.isStopped) {
       stop();
@@ -158,10 +167,24 @@ export default forwardRef(function Lottie(props, ref) {
     }
 
     setAnimationControl();
-    pause();
-    setSpeed();
-    setDirection();
   });
+
+  useEffect( () => {
+    if(props.speed) setSpeed(props.speed);
+    if(props.direction) setDirection(props.direction);
+    if(props.isPaused) pause();
+  }, [props]);
+
+  useEffect( () => {
+    if(!anim) return;
+    if(state.pause) anim.pause();
+    else if(state.play===true) anim.play();
+    else if(state.play===false) anim.stop();
+    if(state.speed) anim.setSpeed(state.speed);
+    if(state.direction) anim.setDirection(state.direction);
+    // setSpeed(state.speed);
+    // (state.direction);
+  }, [state, anim]);
 
   // Render
   const {
@@ -203,7 +226,7 @@ export default forwardRef(function Lottie(props, ref) {
       role={ariaRole}
       aria-label={ariaLabel}
       tabIndex="0"
-    >test</div>
+    />
   );
 });
 
