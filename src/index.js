@@ -12,9 +12,7 @@ export default forwardRef(function Lottie(props, ref) {
   // const [animData, setAnimData] = useState(null);
   const [animApi, setAnimApi] = useState(null);
   const [state, setState] = useState({play: true, speed: props.speed || 1})
-  // const [animationDataOld, setAnimationData] = useState(null);
   
-
   // Config
   const {
     loop,
@@ -24,6 +22,8 @@ export default forwardRef(function Lottie(props, ref) {
   } = props.options;
   let animationData = props.options.animationData;
   if(animationData && animationData.default) animationData = animationData.default;
+
+  const [animationDataPrev, setAnimationDataPrev] = useState(animationData);
 
   const options = {
     ...props.options,
@@ -97,9 +97,9 @@ export default forwardRef(function Lottie(props, ref) {
     }*/
   };
 
-  const destroy = () => {
-    if(!anim) return;
-    anim.destroy();
+  const destroy = (_anim) => {
+    _anim = _anim || anim;
+    _anim.destroy();
   };
 
   const registerEvents = (eventListeners, _anim) => {
@@ -118,6 +118,28 @@ export default forwardRef(function Lottie(props, ref) {
     });
   };
 
+  // componentDidUpdate
+  useEffect( () => {
+    if(props.animationData !== animationDataPrev) {
+      setAnimationDataPrev(animationData);
+    }
+
+    if (props.isStopped) stop();
+    else if (props.segments && props.segments !== state.segments) {
+      const shouldForce = !!props.forceSegments;
+      playSegments(props.segments, shouldForce);
+    } else {
+      play();
+      // console.log('aw')
+    }
+
+    if(props.isPaused) pause();
+    if(props.speed) setSpeed(props.speed);
+    if(props.direction) setDirection(props.direction);
+
+    // setAnimationControl();
+  }, [props, animationDataPrev]);
+
   useEffect(() => {
     options.container = el.current;
 
@@ -133,12 +155,25 @@ export default forwardRef(function Lottie(props, ref) {
 
     return () => {
       deRegisterEvents(props.eventListeners, _anim);
-      destroy();
-      options.animationData = null;
+      destroy(_anim);
+      // options.animationData = null;
       // setAnim(null);
       // setAnimApi(null);
     };
-  }, [el, options.animationData]);
+  }, [el, animationDataPrev]);
+
+  useEffect( () => {
+    if(!anim) return;
+    if(state.pause) anim.pause();
+    else if(state.segments) anim.playSegments(state.segments, state.shouldForce);
+    else if(state.play===true) anim.play();
+    else if(state.play===false) anim.stop();
+
+    if(state.speed) anim.setSpeed(state.speed);
+    if(state.direction) anim.setDirection(state.direction);
+    // setSpeed(state.speed);
+    // (state.direction);
+  }, [state, anim]);
 
   useImperativeHandle(ref, () => ({
     play: play,
@@ -153,37 +188,6 @@ export default forwardRef(function Lottie(props, ref) {
     destroy: destroy,
     stop: stop
   }));
-
-  // componentDidUpdate
-  useEffect( () => {
-    if (props.isStopped) stop();
-    else if (props.segments && props.segments !== state.segments) {
-      const shouldForce = !!props.forceSegments;
-      playSegments(props.segments, shouldForce);
-    } else {
-      play();
-      // console.log('aw')
-    }
-
-    if(props.isPaused) pause();
-    if(props.speed) setSpeed(props.speed);
-    if(props.direction) setDirection(props.direction);
-
-    // setAnimationControl();
-  }, [props]);
-
-  useEffect( () => {
-    if(!anim) return;
-    if(state.pause) anim.pause();
-    else if(state.segments) anim.playSegments(state.segments, state.shouldForce);
-    else if(state.play===true) anim.play();
-    else if(state.play===false) anim.stop();
-
-    if(state.speed) anim.setSpeed(state.speed);
-    if(state.direction) anim.setDirection(state.direction);
-    // setSpeed(state.speed);
-    // (state.direction);
-  }, [state, anim]);
 
   // Render
   const {
