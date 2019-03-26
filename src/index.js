@@ -70,13 +70,12 @@ export default forwardRef(function Lottie(props, ref) {
     // _anim = _anim || anim;
     // if(!_anim) return;
     // _anim.play();
-    setState(p=>({...p, play: true, pause: false}));
+    setState(p=>({...p, play: true, pause: false, segments: null}));
   };
 
-  const playSegments = (shouldForce) => {
-    if(!anim) return;
-    anim.playSegments(props.segments, shouldForce);
-    // setState(p=>({...p, segments: props.segments, shouldForce: shouldForce}))
+  const playSegments = (segments, shouldForce) => {
+    // if(!anim) return;
+    setState(p=>({...p, segments: segments || props.segments, shouldForce: shouldForce}))
   };
 
   const stop = () => {
@@ -103,17 +102,19 @@ export default forwardRef(function Lottie(props, ref) {
     anim.destroy();
   };
 
-  const registerEvents = (eventListeners) => {
+  const registerEvents = (eventListeners, _anim) => {
     if(!eventListeners) return;
+    _anim = _anim || anim;
     eventListeners.forEach((eventListener) => {
-      anim.addEventListener(eventListener.eventName, eventListener.callback);
+      _anim.addEventListener(eventListener.eventName, eventListener.callback);
     });
   };
 
-  const deRegisterEvents = (eventListeners) => {
+  const deRegisterEvents = (eventListeners, _anim) => {
     if(!eventListeners) return;
+    _anim = _anim || anim;
     eventListeners.forEach((eventListener) => {
-      anim.removeEventListener(eventListener.eventName, eventListener.callback);
+      _anim.removeEventListener(eventListener.eventName, eventListener.callback);
     });
   };
 
@@ -131,7 +132,7 @@ export default forwardRef(function Lottie(props, ref) {
     setAnimationControl(_animApi);
 
     return () => {
-      deRegisterEvents(props.eventListeners);
+      deRegisterEvents(props.eventListeners, _anim);
       destroy();
       options.animationData = null;
       // setAnim(null);
@@ -155,31 +156,29 @@ export default forwardRef(function Lottie(props, ref) {
 
   // componentDidUpdate
   useEffect( () => {
-    if(!el.current || !anim) return;
-
-    if (props.isStopped) {
-      stop();
-    } else if (props.segments) {
+    if (props.isStopped) stop();
+    else if (props.segments && props.segments !== state.segments) {
       const shouldForce = !!props.forceSegments;
-      playSegments(shouldForce);
+      playSegments(props.segments, shouldForce);
     } else {
       play();
+      // console.log('aw')
     }
 
-    setAnimationControl();
-  });
-
-  useEffect( () => {
+    if(props.isPaused) pause();
     if(props.speed) setSpeed(props.speed);
     if(props.direction) setDirection(props.direction);
-    if(props.isPaused) pause();
+
+    // setAnimationControl();
   }, [props]);
 
   useEffect( () => {
     if(!anim) return;
     if(state.pause) anim.pause();
+    else if(state.segments) anim.playSegments(state.segments, state.shouldForce);
     else if(state.play===true) anim.play();
     else if(state.play===false) anim.stop();
+
     if(state.speed) anim.setSpeed(state.speed);
     if(state.direction) anim.setDirection(state.direction);
     // setSpeed(state.speed);
