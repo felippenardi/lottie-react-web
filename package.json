@@ -1,5 +1,5 @@
 {
-  "name": "lottie-react-web",
+  "name": "@jadbox/lottie-react-web",
   "version": "2.1.4",
   "description": "Lottie wrapper for React on the web.",
   "repository": {
@@ -22,11 +22,13 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.0",
     "@babel/polyfill": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
-    "@kadira/storybook": "^2.35.3",
+    "@babel/register": "^7.4.0",
+    "@storybook/react": "^5.0.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "chai": "^3.5.0",
