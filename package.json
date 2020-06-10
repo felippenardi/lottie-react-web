@@ -2,6 +2,7 @@
   "name": "lottie-react-web",
   "version": "2.1.4",
   "description": "Lottie wrapper for React on the web.",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/felippenardi/lottie-react-web"
