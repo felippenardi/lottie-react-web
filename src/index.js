@@ -18,7 +18,6 @@ export default class Lottie extends React.Component {
       renderer = 'svg',
       rendererSettings,
       assetsPath,
-      segments,
     } = options;
 
     this.options = {
@@ -27,7 +26,6 @@ export default class Lottie extends React.Component {
       renderer,
       loop: loop !== false,
       autoplay: autoplay !== false,
-      segments: segments !== false,
       animationData,
       rendererSettings,
       assetsPath
