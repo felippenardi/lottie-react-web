@@ -96,7 +96,7 @@ These are all props available:
 |**`isPaused`**| A boolean flag indicating whether or not the animation is paused. | `false` |
 |**`speed`**| An integer indicating the speed of the animation ( `1` is `100%`.) | `1` |
 |**`segments`**| An array of two integers indicating the beginning and ending frame of the animation | Defaults to play entire animation |
-|**`forceSegment`**| A boolean indicating wether the segments should play immediately or sequentially | `false` |
+|**`forceSegments`**| A boolean indicating wether the segments should play immediately or sequentially | `false` |
 |**`direction`**| An integer indicating wether the animation progresses in the usual (`1`) or reverse (`-1`) direction | `1` |
 |**`ariaRole`**| A string indicating the animation container `ariaRole` property | `"button"` |
 |**`ariaLabel`**| A string indicating the animation container `ariaLabel` property | `"animation"` |
