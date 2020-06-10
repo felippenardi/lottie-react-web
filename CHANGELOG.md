@@ -1,10 +1,16 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/felippenardi/lottie-react-web/compare/v2.1.4...v2.2.1) (2020-06-10)
+
+
 ### Bug Fixes
+
+* typo in forceSegments prop ([#22](https://github.com/felippenardi/lottie-react-web/issues/22)) ([828d50f](https://github.com/felippenardi/lottie-react-web/commit/828d50f185d11504339eefd5fdc8872586571bcc))
 * Animation wasn't playing the segments stated at the initial mount
 * Animation was reseted on every mount
+
 
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/felippenardi/lottie-react-web/compare/v2.1.1...v2.1.2) (2018-08-09)
