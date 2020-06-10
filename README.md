@@ -105,11 +105,16 @@ These are all props available:
 ### Options object
 Defines the animation settings that will be instantiated by bodymovin. Currently a subset of the bodymovin options are supported.
 
+Either the animationData OR path must be specified.
+
 | Prop | Description | Default |
 |---|---|---|
 |**`animationData`**| **Mandatory** - The source of the animation. | — |
+|**`path`**| **Mandatory** - The path to the animation. | — |
+|**`assetsPath`**| **Mandatory** - The root path for external assets. | `images` |
 |**`loop`**| Play animation non-stop in a loop. | `true` |
 |**`autoplay`**| Automatically play animation when it is instantiated. | `true` |
+|**`renderer`**| The method for rendering the animation. | `svg` |
 |**`rendererSettings`**| Customize bodymovin aspect ratio configurations. | — |
 
 ## Changing animation at runtime
