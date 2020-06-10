@@ -18,7 +18,6 @@ export default class Lottie extends React.Component {
       renderer = 'svg',
       rendererSettings,
       assetsPath,
-      segments,
     } = options;
 
     this.options = {
@@ -27,7 +26,6 @@ export default class Lottie extends React.Component {
       renderer,
       loop: loop !== false,
       autoplay: autoplay !== false,
-      segments: segments !== false,
       animationData,
       rendererSettings,
       assetsPath
@@ -41,6 +39,14 @@ export default class Lottie extends React.Component {
     this.animApi = lottieApi.createAnimationApi(this.anim);
     this.registerEvents(eventListeners);
     this.setAnimationControl();
+
+    if (this.props.isStopped) {
+      this.stops();
+    } else if (this.props.segments) {
+      this.playSegments(true);
+    } else {
+      this.play();
+    }
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
@@ -55,12 +61,17 @@ export default class Lottie extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.props.isStopped) {
       this.stop();
     } else if (this.props.segments) {
-      const shouldForce = !!this.props.forceSegments;
-      this.playSegments(shouldForce);
+      if (
+        JSON.stringify(this.props.segments) ===
+        JSON.stringify(prevProps.segments)
+      ) {
+        return;
+      }
+      this.playSegments(this.props.forceSegments);
     } else {
       this.play();
     }

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### Bug Fixes
+* Animation wasn't playing the segments stated at the initial mount
+* Animation was reseted on every mount
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/felippenardi/lottie-react-web/compare/v2.1.1...v2.1.2) (2018-08-09)
 
