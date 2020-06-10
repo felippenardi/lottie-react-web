@@ -1,21 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import lottie from 'lottie-web';
-import lottieApi from 'lottie-api/dist/lottie_api';
+import React from "react";
+import PropTypes from "prop-types";
+import lottie from "lottie-web";
+import lottieApi from "lottie-api/dist/lottie_api";
 
 export default class Lottie extends React.Component {
   componentDidMount() {
-    const {
-      options,
-      eventListeners,
-    } = this.props;
+    const { options, eventListeners } = this.props;
 
     const {
       loop,
       autoplay,
       animationData,
       path,
-      renderer = 'svg',
+      renderer = "svg",
       rendererSettings,
       assetsPath,
     } = options;
@@ -28,7 +25,7 @@ export default class Lottie extends React.Component {
       autoplay: autoplay !== false,
       animationData,
       rendererSettings,
-      assetsPath
+      assetsPath,
     };
 
     this.options = { ...this.options, ...options };
@@ -62,6 +59,10 @@ export default class Lottie extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.options.loop !== undefined) {
+      this.anim.loop = this.props.options.loop;
+    }
+
     if (this.props.isStopped) {
       this.stop();
     } else if (this.props.segments) {
