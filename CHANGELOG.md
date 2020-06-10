@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/felippenardi/lottie-react-web/compare/v2.1.0...v2.1.1) (2018-08-05)
 
+### Bug Fixes
+* Animation wasn't playing the segments stated at the initial mount
+* Animation was reseted on every mount
 
 ### Bug Fixes
 
