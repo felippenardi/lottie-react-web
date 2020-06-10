@@ -138,6 +138,7 @@ export default class Lottie extends React.Component {
       ariaRole,
       ariaLabel,
       title,
+      tabIndex,
     } = this.props;
 
     const getSize = (initial) => {
@@ -172,7 +173,7 @@ export default class Lottie extends React.Component {
         title={title}
         role={ariaRole}
         aria-label={ariaLabel}
-        tabIndex="0"
+        tabIndex={tabIndex}
       />
     );
   }
@@ -193,6 +194,7 @@ Lottie.propTypes = {
   ariaLabel: PropTypes.string,
   title: PropTypes.string,
   style: PropTypes.string,
+  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 Lottie.defaultProps = {
@@ -203,4 +205,5 @@ Lottie.defaultProps = {
   ariaRole: 'button',
   ariaLabel: 'animation',
   title: '',
+  tabIndex: 0,
 };
