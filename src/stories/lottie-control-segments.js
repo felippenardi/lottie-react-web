@@ -44,7 +44,7 @@ export default class LottieControlSegment extends React.Component {
       <input
         style={centerStyle}
         type="range" value={speed} min="0" max="3" step="0.5"
-        onChange={e => this.setState({ speed: e.currentTarget.value })}
+        onChange={e => this.setState({ speed: +e.currentTarget.value })}
       />
       <p style={centerStyle}>Segment range: [{startFrame}, {endFrame}]</p>
       <div style={centerStyle}>
