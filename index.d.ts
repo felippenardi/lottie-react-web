@@ -31,6 +31,7 @@ declare module "lottie-react-web" {
     direction?: 1 | -1;
     ariaRole?: string;
     ariaLabel?: string;
+    tabIndex?: string | number;
     title?: string;
 
     // Not documented
