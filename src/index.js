@@ -38,7 +38,7 @@ export default class Lottie extends React.Component {
     this.setAnimationControl();
 
     if (this.props.isStopped) {
-      this.stops();
+      this.stop();
     } else if (this.props.segments) {
       this.playSegments(true);
     } else {
