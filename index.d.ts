@@ -4,8 +4,11 @@ declare module "lottie-react-web" {
 
   export interface LottieOptions {
     animationData: any;
+    path?: string;
+    assetsPath?: string;
     loop?: boolean;
     autoplay?: boolean;
+    renderer?: 'svg' | 'canvas' | 'html';
     rendererSettings?: AnimationConfig["rendererSettings"];
   }
 
