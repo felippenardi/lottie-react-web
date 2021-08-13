@@ -38,7 +38,7 @@ export default class Lottie extends React.Component {
     this.setAnimationControl();
 
     if (this.props.isStopped) {
-      this.stops();
+      this.stop();
     } else if (this.props.segments) {
       this.playSegments(true);
     } else {
@@ -138,33 +138,32 @@ export default class Lottie extends React.Component {
 
   registerEvents(eventListeners) {
     eventListeners.forEach((eventListener) => {
-      this.anim.addEventListener(eventListener.eventName, eventListener.callback);
+      this.anim.addEventListener(
+        eventListener.eventName,
+        eventListener.callback
+      );
     });
   }
 
   deRegisterEvents(eventListeners) {
     eventListeners.forEach((eventListener) => {
-      this.anim.removeEventListener(eventListener.eventName, eventListener.callback);
+      this.anim.removeEventListener(
+        eventListener.eventName,
+        eventListener.callback
+      );
     });
   }
 
   render() {
-    const {
-      width,
-      height,
-      ariaRole,
-      ariaLabel,
-      title,
-      tabIndex,
-    } = this.props;
+    const { width, height, ariaRole, ariaLabel, title, tabIndex } = this.props;
 
     const getSize = (initial) => {
       let size;
 
-      if (typeof initial === 'number') {
+      if (typeof initial === "number") {
         size = `${initial}px`;
       } else {
-        size = initial || '100%';
+        size = initial || "100%";
       }
 
       return size;
@@ -173,9 +172,9 @@ export default class Lottie extends React.Component {
     const lottieStyles = {
       width: getSize(width),
       height: getSize(height),
-      overflow: 'hidden',
-      margin: '0 auto',
-      outline: 'none',
+      overflow: "hidden",
+      margin: "0 auto",
+      outline: "none",
       ...this.props.style,
     };
 
@@ -219,8 +218,8 @@ Lottie.defaultProps = {
   isStopped: false,
   isPaused: false,
   speed: 1,
-  ariaRole: 'button',
-  ariaLabel: 'animation',
-  title: '',
+  ariaRole: "button",
+  ariaLabel: "animation",
+  title: "",
   tabIndex: 0,
 };
