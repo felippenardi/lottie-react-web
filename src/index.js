@@ -210,7 +210,10 @@ Lottie.propTypes = {
   ariaRole: PropTypes.string,
   ariaLabel: PropTypes.string,
   title: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ])),
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
